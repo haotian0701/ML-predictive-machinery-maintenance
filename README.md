@@ -28,9 +28,9 @@
 
 ## Areas for Future Improvement
 
-- [ ] ...
-- [ ] ...
-- [ ] ...
+- [ ] Refine models to predict _individual_ failure codes (rather than just any failure) to enhance model robustness.
+- [ ] Investigate hybrid models that combine MLPs for "static" features (e.g., machine make) and RNNs for temporal data (e.g., rotation) to improve prediction accuracy.
+- [ ] Explore advanced ensemble methods to improve performance.
 
 ## Acknowledgements 
 
