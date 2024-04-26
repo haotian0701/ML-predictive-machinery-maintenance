@@ -1,0 +1,16 @@
+name: ml-predictive-failure
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - jupyter
+  - matplotlib
+  - nb_conda_kernels
+  - numpy
+  - pandas
+  - python=3.8
+  - pytorch
+  - scikit-learn
+  - scipy
+  - seaborn
+  - tqdm
