@@ -135,7 +135,15 @@ def generate_features_dict(
     List[List[int | float]]
 ]:
     """
-    Generates a dictionary of features from the DataFrame based on chunk size.
+    Purpose: Generates a dictionary of features from the DataFrame based on chunk size and a
+        specified feature window.
+    :param df: pd.DataFrame representing preprocessed machinery data.
+    :param hour_feature_window: int representing the size of the time window in hours for which
+        features are aggregated.
+    :param chunk_size: int representing the number of rows in each chunk for which individual 
+        feature aggregations are computed.
+    :return: Dict[str, List[List[int | float]]] representing aggregated feature data organized by 
+        machine example IDs, with each list containing aggregated data for corresponding chunks.
     """
     assert hour_feature_window % chunk_size == 0, \
         f"chunk_size ({chunk_size}) must evenly divide hour_feature_window ({hour_feature_window})."
