@@ -14,6 +14,7 @@ def identify_future_failures_dict(
     """
     Purpose: Creates dictionary indicating if any failure (1 through 4) occurs
         within a specified number of hours for each machine_example_ID.
+        Used in notebooks/create_features_targets/create_targets.ipynb file.
     :param df: pd.DataFrame containing machine data.
     :param hours_ahead: int representing the number of hours to look ahead for
         failures from the max datetime of each machine_example_ID.
@@ -75,7 +76,7 @@ def aggregate_by_time_window(
 ) -> pd.DataFrame:
     """
     Purpose: Groups and aggregates the data based on the time windows passed in.
-        Used in notebooks/create_LogReg_MLP_features.ipynb file.
+        Used in notebooks/create_features_targets/create_LogReg_MLP_features.ipynb file.
     :param df: pd.DataFrame containing machine data.
     :param time_window: int representing the number of hours to group and aggregate the data into;
         choose from 12, 24, 48, 72.
@@ -147,7 +148,7 @@ def rename_first_column_aggregated_df(
 ) -> pd.DataFrame:
     """
     Purpose: Renames the first column of the input dataframe by removing the first
-        3 characters. Used in notebooks/create_LogReg_MLP_features.ipynb file.
+        3 characters. Used in notebooks/create_features_targets/create_LogReg_MLP_features.ipynb file.
     :param aggregated_df: pd.DataFrame containing machine data.
     :return: DataFrame with the first column renamed.
     """
@@ -179,7 +180,7 @@ def remove_max_time_window(
         Note: This is necessary because while the final time window
             does contain features, it does not have a subsequent time
             window from which to determine a label/outcome.
-        Used in notebooks/create_LogReg_MLP_features.ipynb file.
+        Used in notebooks/create_features_targets/create_LogReg_MLP_features.ipynb file.
     :param df: pd.DataFrame containing machine data.
     :return: pd.DataFrame with the last time window removed.
     """
@@ -287,6 +288,7 @@ def generate_rnn_features_dict(
     """
     Purpose: Generates a dictionary of features from the DataFrame based on chunk size and a
         specified feature window, suitable as RNN features.
+        Used in notebooks/create_features_targets/create_RNN_features.ipynb file.
     :param df: pd.DataFrame representing preprocessed machinery data.
     :param hour_feature_window: int representing the size of the time window in hours for which
         features are aggregated.
