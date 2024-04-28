@@ -119,22 +119,181 @@ class RNN_Model(nn.Module):
         ).requires_grad_()
 
         # forward propagation
-        _, h_last_time_step_all_hidden_layers = self.rnn(
+        _, rnn_output = self.rnn(
             input = x,
             hx = h0.detach()
         )
 
         # obtain last layer of last hidden state
-        h_final_hidden_state = h_last_time_step_all_hidden_layers[-1, :, :]
+        final_hidden_state = rnn_output[-1, :, :]
 
         # obtain last logits
-        last_logits = self.classifier_mlp(
-            h_final_hidden_state
+        classifier_logits = self.classifier_mlp(
+            final_hidden_state
         )
 
-        return last_logits
+        return classifier_logits
 
 
+class LSTM_Model(nn.Module):
+    """
+    A class with an LSTM model which processes sequences using a LSTM layer,
+    followed by a customizable MLP classifier.
+    """
+
+    def __init__(
+        self,
+        input_size: int,
+        hidden_size: int,
+        num_layers: int,
+        dropout: float,
+        classifier_mlp: nn.Module
+    ) -> None:
+        """
+        Purpose: Initializes the LSTM model with specified attributes and an MLP classifier.
+        :param input_size: int representing the number of input features per time step.
+        :param hidden_size: int representing the size of the LSTM hidden state.
+        :param num_layers: int representing the number of stacked LSTM layers.
+        :param dropout: float representing the dropout rate between LSTM layers (not including last layer).
+        :param classifier_mlp: nn.Module representing the MLP used for final classification.
+        :return: None.
+        """
+        # initialize parent class, nn.Module
+        super(LSTM_Model, self).__init__()
+
+        # set LSTM attributes
+        self.input_size = input_size
+        self.hidden_size = hidden_size
+        self.num_layers = num_layers
+        self.dropout = dropout
+
+        # instantiate LSTM
+        self.rnn = nn.LSTM(
+            **{
+                'input_size': self.input_size,
+                'hidden_size': self.hidden_size,
+                'num_layers': self.num_layers,
+                'dropout': self.dropout,
+            }
+        )
+
+        # set classifier MLP attribute
+        assert classifier_mlp is not None, \
+            "Classifier MLP cannot be None!"
+        self.classifier_mlp = classifier_mlp
+
+    def forward(
+        self,
+        x: torch.Tensor
+    ) -> torch.Tensor:
+        """
+        Purpose: Defines computation performed at each call of the LSTM model.
+        :param x: torch.Tensor representing input sequence to the LSTM.
+        :return: torch.Tensor representing output predictions from the MLP classifier.
+        """
+        # initialize hidden state for first input with zeros
+        h0 = torch.zeros(
+            size = (self.num_layers, x.size(1), self.hidden_size),
+            device = x.device
+        ).requires_grad_()
+
+        # initialize cell state for first input with zeros
+        c0 = torch.zeros(
+            size = (self.num_layers, x.size(1), self.hidden_size),
+            device = x.device
+        ).requires_grad_()
+
+        # forward propagation
+        _, (rnn_output, _) = self.rnn(
+            input = x,
+            hx = (h0.detach(), c0.detach())
+        )
+
+        # obtain last layer of last hidden state
+        final_hidden_state = rnn_output[-1, :, :]
+
+        # obtain last logits
+        classifier_logits = self.classifier_mlp(
+            final_hidden_state
+        )
+
+        return classifier_logits
 
 
+class GRU_Model(nn.Module):
+    """
+    A class with a GRU model which processes sequences using a GRU layer,
+    followed by a customizable MLP classifier.
+    """
 
+    def __init__(
+        self,
+        input_size: int,
+        hidden_size: int,
+        num_layers: int,
+        dropout: float,
+        classifier_mlp: nn.Module
+    ) -> None:
+        """
+        Purpose: Initializes the GRU model with specified attributes and an MLP classifier.
+        :param input_size: int representing the number of input features per time step.
+        :param hidden_size: int representing the size of the GRU hidden state.
+        :param num_layers: int representing the number of stacked GRU layers.
+        :param dropout: float representing the dropout rate between GRU layers (not including last layer).
+        :param classifier_mlp: nn.Module representing the MLP used for final classification.
+        :return: None.
+        """
+        # initialize parent class, nn.Module
+        super(GRU_Model, self).__init__()
+
+        # set GRU attributes
+        self.input_size = input_size
+        self.hidden_size = hidden_size
+        self.num_layers = num_layers
+        self.dropout = dropout
+
+        # instantiate GRU
+        self.rnn = nn.GRU(
+            **{
+                'input_size': self.input_size,
+                'hidden_size': self.hidden_size,
+                'num_layers': self.num_layers,
+                'dropout': self.dropout,
+            }
+        )
+
+        # set classifier MLP attribute
+        assert classifier_mlp is not None, \
+            "Classifier MLP cannot be None!"
+        self.classifier_mlp = classifier_mlp
+
+    def forward(
+        self,
+        x: torch.Tensor
+    ) -> torch.Tensor:
+        """
+        Purpose: Defines computation performed at each call of the GRU model.
+        :param x: torch.Tensor representing input sequence to the GRU.
+        :return: torch.Tensor representing output predictions from the MLP classifier.
+        """
+        # initialize hidden state for first input with zeros
+        h0 = torch.zeros(
+            size = (self.num_layers, x.size(1), self.hidden_size),
+            device = x.device
+        ).requires_grad_()
+
+        # forward propagation
+        _, rnn_output = self.rnn(
+            input = x,
+            hx = h0.detach()
+        )
+
+        # obtain last layer of last hidden state
+        final_hidden_state = rnn_output[-1, :, :]
+
+        # obtain last logits
+        classifier_logits = self.classifier_mlp(
+            final_hidden_state
+        )
+
+        return classifier_logits
