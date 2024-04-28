@@ -1,8 +1,10 @@
 # Machine Learning for Predictive Failure in Industrial Machinery 
 
-...
+This project utilizes and contrasts several machine learning techniques -- including logistic regression, artificial neural networks (ANNs), and sequential ANNs -- to address the challenge of preemptive equipment failure detection in industrial machinery. By developing a comprehensive predictive failure system, this project showcases how to enhance safety and minimize economic losses in industrial settings, focusing on deriving actionable insights that promote proactive maintenance strategies.
 
-## Motivation
+To ensure the effectiveness of the models, this project addresses various challenges such as computational limitations, feature engineering, and potential overfitting. A structured train-validate-test framework is employed, focusing on metrics such as AUROC, accuracy, precision, and recall, _with some models achieving validation and test AUROC figures exceeding 0.999._ Through these efforts, the project demonstrates how advanced predictive techniques can minimize downtime, ensure operational safety, and extend the lifespan of industrial machinery.
+
+## Usage
 
 ...
 
@@ -10,7 +12,15 @@
 
 ...
 
-## Usage
+#### Raw Data
+
+...
+
+#### Preprocessing Data
+
+...
+
+#### Features and Targets
 
 ...
 
