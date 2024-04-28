@@ -1,6 +1,7 @@
 from typing import Dict, Iterator, List, Sequence
 import pandas as pd
 import numpy as np
+from scipy.stats import skew, kurtosis
 
 
 def identify_future_failures_dict(
@@ -68,6 +69,155 @@ def identify_future_failures_dict(
     return future_failures_dict
 
 
+def aggregate_by_time_window(
+    df: pd.DataFrame,
+    time_window: int
+) -> pd.DataFrame:
+    """
+    Purpose: Groups and aggregates the data based on the time windows passed in.
+        Used in notebooks/create_LogReg_MLP_features.ipynb file.
+    :param df: pd.DataFrame containing machine data.
+    :param time_window: int representing the number of hours to group and aggregate the data into;
+        choose from 12, 24, 48, 72.
+    :return: pd.DataFrame with data grouped and aggregated by 'machine_example_ID'.
+    """
+    # check if time window is valid
+    valid_time_windows = [12, 24, 48, 72]
+    if time_window not in valid_time_windows:
+        raise ValueError("Invalid time window. Please choose one of 12, 24, 48, 72.")
+
+    # define helper function for range
+    def _range(
+        x: pd.Series
+    ) -> float:
+        """
+        Purpose: Calculates range of values in a pandas Series.
+        :param x: pd.Series representing a column of numeric data.
+        :return: float representing the range (max minus min) of the series.
+        """
+        return np.max(x) - np.min(x)
+
+    # define aggregation functions for each column
+    agg_funcs = {
+        'datetime': 'first',
+        'machineID': 'first',
+        'volt': [
+            'mean', 'std', skew, kurtosis, 'min', 'max', _range
+        ],
+        'rotate': [
+            'mean', 'std', skew, kurtosis, 'min', 'max', _range
+        ],
+        'pressure': [
+            'mean', 'std', skew, kurtosis, 'min', 'max', _range
+        ],
+        'vibration': [
+            'mean', 'std', skew, kurtosis, 'min', 'max', _range
+        ],
+        'comp1_maint': 'sum',
+        'comp2_maint': 'sum',
+        'comp3_maint': 'sum',
+        'comp4_maint': 'sum',
+        'error1': 'sum',
+        'error2': 'sum',
+        'error3': 'sum',
+        'error4': 'sum',
+        'error5': 'sum',
+        'comp1_failure': 'sum',
+        'comp2_failure': 'sum',
+        'comp3_failure': 'sum',
+        'comp4_failure': 'sum',
+        'age': 'first',
+        'model2': 'max',
+        'model3': 'max',
+        'model4': 'max'
+    }
+
+    # group by selected columns and aggregate using agg_funcs
+    aggregated_df = df.groupby(
+       by = f'{time_window}_machine_example_ID'
+    ).agg(
+       func = agg_funcs
+    ).reset_index()
+
+    return aggregated_df
+
+
+def rename_first_column_aggregated_df(
+    aggregated_df: pd.DataFrame
+) -> pd.DataFrame:
+    """
+    Purpose: Renames the first column of the input dataframe by removing the first
+        3 characters. Used in notebooks/create_LogReg_MLP_features.ipynb file.
+    :param aggregated_df: pd.DataFrame containing machine data.
+    :return: DataFrame with the first column renamed.
+    """
+    # extract common part of column names;
+    # assuming first column follows the pattern
+    common_part = aggregated_df.columns[0][:3]
+
+    # replace common part with an empty string
+    new_column_name = aggregated_df.columns[0].replace(
+        common_part, ''
+    )
+
+    # rename column
+    aggregated_df.rename(
+        columns = {
+            aggregated_df.columns[0]: new_column_name
+        },
+        inplace = True
+    )
+
+    return aggregated_df
+
+
+def remove_max_time_window(
+    df: pd.DataFrame
+) -> pd.DataFrame:
+    """
+    Purpose: Removes the last time window from the input dataframe.
+        Note: This is necessary because while the final time window
+            does contain features, it does not have a subsequent time
+            window from which to determine a label/outcome.
+        Used in notebooks/create_LogReg_MLP_features.ipynb file.
+    :param df: pd.DataFrame containing machine data.
+    :return: pd.DataFrame with the last time window removed.
+    """
+    #print(f"- {format(len(df), ',')} total entries.")
+
+    # extract machine ID and time window
+    df[['machineID', 'time_window']] = df['machine_example_ID'].str.extract(
+        pat = r'\((\d+),\s*(\d+)\)'
+    )
+
+    # convert machineID and time_window to integers
+    df['machineID'] = df['machineID'].astype(int)
+    df['time_window'] = df['time_window'].astype(int)
+
+    # group by machine ID and find the maximum time window for each machine
+    max_time_windows = df.groupby(
+        by = 'machineID'
+    )['time_window'].max()
+
+    # filter out rows where time window matches the maximum time window for each machine
+    filtered_df = df[
+        ~df.apply(
+            lambda row: row['time_window'] == max_time_windows[row['machineID']],
+            axis = 1
+        )
+    ].copy()
+
+    # drop machineID and time_window columns
+    filtered_df.drop(
+        columns = ['machineID', 'time_window'],
+        inplace = True
+    )
+
+    #print(f"- {format(len(filtered_df), ',')} total entries after removal.")
+
+    return filtered_df
+
+
 def _chunker(
     seq: Sequence,
     size: int
@@ -126,7 +276,7 @@ def _custom_agg(
     return aggregated_list
 
 
-def generate_features_dict(
+def generate_rnn_features_dict(
     df: pd.DataFrame,
     hour_feature_window: int,
     chunk_size: int = 1
@@ -136,7 +286,7 @@ def generate_features_dict(
 ]:
     """
     Purpose: Generates a dictionary of features from the DataFrame based on chunk size and a
-        specified feature window.
+        specified feature window, suitable as RNN features.
     :param df: pd.DataFrame representing preprocessed machinery data.
     :param hour_feature_window: int representing the size of the time window in hours for which
         features are aggregated.
@@ -178,3 +328,5 @@ def generate_features_dict(
         features_dict[machine_example_ID] = aggregated_data_list
 
     return features_dict
+
+
