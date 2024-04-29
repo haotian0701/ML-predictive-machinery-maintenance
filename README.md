@@ -1,6 +1,6 @@
 # Machine Learning for Predictive Failure in Industrial Machinery 
 
-This project utilizes and contrasts several machine learning techniques — including logistic regression, artificial neural networks (ANNs), and sequential ANNs — to address the challenge of preemptive equipment failure detection in industrial machinery. Using the [_Microsoft Azure Predictive Maintenance_ dataset](https://www.kaggle.com/datasets/arnabbiswas1/microsoft-azure-predictive-maintenance/data), this project develops a comprehensive predictive failure system. It showcases how to enhance safety and minimize economic losses in industrial settings by deriving actionable insights that promote proactive maintenance strategies
+This project utilizes and contrasts several machine learning techniques — including logistic regression, artificial neural networks (ANNs), and sequential ANNs — to address the challenge of preemptive equipment failure detection in industrial machinery. Using the [_Microsoft Azure Predictive Maintenance_ dataset](https://www.kaggle.com/datasets/arnabbiswas1/microsoft-azure-predictive-maintenance/data), this project develops a comprehensive predictive failure system. It showcases how to enhance safety and minimize economic losses in industrial settings by deriving actionable insights that promote proactive maintenance strategies.
 
 To ensure the effectiveness of the models, this project addresses various challenges such as computational limitations, feature engineering, and potential overfitting. A structured train-validate-test framework is employed, focusing on metrics such as AUROC, accuracy, precision, and recall, _with some models achieving validation and test AUROC figures exceeding 0.999._ Through these efforts, the project demonstrates how advanced predictive techniques can minimize downtime, ensure operational safety, and extend the lifespan of industrial machinery.
 
@@ -15,11 +15,11 @@ This project uses the [_Microsoft Azure Predictive Maintenance_ dataset](https:/
   - **Sequential Models:** In contrast, RNN, LSTM, and GRU process each 24-hour window as a sequence of hourly snapshots, with 25 features per hour to maintain temporal relationships. 
 - <ins>Target Data:</ins> Output labels are generated to indicate whether a machine will fail within the subsequent 6- or 24-hours, enabling the models to predict short-term and medium-term failures. 
 
-To ensure robust training and evaluation, features and labels are carefully aligned to avoid data leakage.
+To ensure accurate training and evaluation, features and labels are carefully aligned to avoid data leakage.
 
 ## Methodology
 
-To ensure thorough evaluation and prevent overfitting, the dataset was partitioned randomly with 60% of data for training, 20% for validation, and 20% for testing. Each "example" corresponds to a 24-hour period for a given machine, and whether it failed in the subsequent 24-hour period. For ANNs, taining was conducted over 200 epochs using binary cross entropy to optimize the models effectively without overfitting.
+To ensure thorough evaluation and prevent overfitting, the dataset was partitioned randomly with 60% of data for training, 20% for validation, and 20% for testing. Each "example" corresponds to a 24-hour period for a given machine, and whether it failed in the subsequent 24-hour period. For ANNs, training was conducted over 200 epochs using binary cross entropy to optimize the models effectively without overfitting.
 
 - _Logistic Regression_ served primarily for illustrative purposes to establish a baseline, demonstrating the non-linear relationship in the dataset where simpler linear models might fail.
 - _MLP and Sequential Models (RNN, LSTM, GRU)_ were fine-tuned to optimize parameters like learning rate, batch size, and dropout rates over several experiments (not all included in notebooks). For sequential models, specific attention was given to RNN dropout and hidden layers, crucial for handling temporal data efficiently.
