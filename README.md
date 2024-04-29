@@ -4,23 +4,9 @@ This project utilizes and contrasts several machine learning techniques -- inclu
 
 To ensure the effectiveness of the models, this project addresses various challenges such as computational limitations, feature engineering, and potential overfitting. A structured train-validate-test framework is employed, focusing on metrics such as AUROC, accuracy, precision, and recall, _with some models achieving validation and test AUROC figures exceeding 0.999._ Through these efforts, the project demonstrates how advanced predictive techniques can minimize downtime, ensure operational safety, and extend the lifespan of industrial machinery.
 
-## Usage
+To get started with running the code yourself, please see the [Usage section](#usage) below.
 
-...
-
-## Data
-
-...
-
-#### Raw Data
-
-...
-
-#### Preprocessing Data
-
-...
-
-#### Features and Targets
+## Data and Preprocessing
 
 ...
 
@@ -35,6 +21,30 @@ To ensure the effectiveness of the models, this project addresses various challe
 ## Discussion
 
 ...
+
+## Usage
+
+To properly utilize this project, ensure that Python can import from the project's `src/` and `data/` directories, necessary for the Jupyter notebooks to import the necessary modules and data files.
+
+#### Environment Setup
+
+First, set up the environment using Conda:
+
+```bash
+# create environment from project directory
+$ conda env create -f environment.yml
+$ conda activate ml-predictive-failure
+```
+
+#### Running the Notebooks
+
+With the environment activated, launch Jupyter to run the notebooks:
+
+```bash
+(ml-predictive-failure) $ jupyter notebook
+```
+
+This will start Jupyter. Open and execute the project notebooks to explore the code. When Jupyter is launched from the root of the project directory, it automatically configures the path to include the `src/` and `data/` directories, enabling straightforward imports within the notebooks.
 
 ## Areas for Future Improvement
 
