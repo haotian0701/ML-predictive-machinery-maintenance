@@ -1,4 +1,4 @@
-name: ml-predictive-failure
+name: ml-pred-fail
 channels:
   - conda-forge
   - defaults

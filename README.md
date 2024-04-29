@@ -47,7 +47,7 @@ First, set up the environment using Conda:
 ```bash
 # create environment from project directory
 $ conda env create -f environment.yml
-$ conda activate ml-predictive-failure
+$ conda activate ml-pred-fail
 ```
 
 ##### Running the Notebooks
@@ -55,7 +55,7 @@ $ conda activate ml-predictive-failure
 With the environment activated, launch Jupyter to run the notebooks:
 
 ```bash
-(ml-predictive-failure) $ jupyter notebook
+(ml-pred-fail) $ jupyter notebook
 ```
 
 This will start Jupyter. Open and execute the project notebooks to explore the code. When Jupyter is launched from the root of the project directory, it automatically configures the path to include the `src/` and `data/` directories, enabling straightforward imports within the notebooks.
@@ -75,4 +75,4 @@ This will start Jupyter. Open and execute the project notebooks to explore the c
 ## Contact Information
 
 - Alexander Wilcox
-- Email: alexander.w.wilcox [at] gmail.com
+- Email: alexander.w.wilcox [at] gmail [dot] com
