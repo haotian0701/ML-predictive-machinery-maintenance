@@ -1,4 +1,4 @@
-name: ml-pred-fail
+name: ml-pred-mchn
 channels:
   - conda-forge
   - defaults

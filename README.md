@@ -1,6 +1,6 @@
-# Machine Learning for Predictive Failure in Industrial Machinery 
+# Machine Learning for Predictive Maintenance in Industrial Machinery 
 
-This project utilizes and contrasts several machine learning techniques — including logistic regression, artificial neural networks (ANNs), and sequential ANNs — to address the challenge of preemptive equipment failure detection in industrial machinery. Using the [_Microsoft Azure Predictive Maintenance_ dataset](https://www.kaggle.com/datasets/arnabbiswas1/microsoft-azure-predictive-maintenance/data), this project develops a comprehensive predictive failure system. It showcases how to enhance safety and minimize economic losses in industrial settings by deriving actionable insights that promote proactive maintenance strategies.
+This project utilizes and contrasts several machine learning techniques — including logistic regression, artificial neural networks (ANNs), and sequential ANNs — to address the challenge of preemptive equipment failure detection in industrial machinery. Using the [_Microsoft Azure Predictive Maintenance_ dataset](https://www.kaggle.com/datasets/arnabbiswas1/microsoft-azure-predictive-maintenance/data), this project develops a comprehensive predictive maintenance system. It showcases how to enhance safety and minimize economic losses in industrial settings by deriving actionable insights that promote proactive maintenance strategies.
 
 To ensure the effectiveness of the models, this project addresses various challenges such as computational limitations, feature engineering, and potential overfitting. A structured train-validate-test framework is employed, focusing on metrics such as AUROC, accuracy, precision, and recall, _with some models achieving validation and test AUROC figures exceeding 0.999._ Through these efforts, the project demonstrates how advanced predictive techniques can minimize downtime, ensure operational safety, and extend the lifespan of industrial machinery.
 
@@ -49,7 +49,7 @@ First, set up the environment using Conda:
 ```bash
 # create environment from project directory
 $ conda env create -f environment.yml
-$ conda activate ml-pred-fail
+$ conda activate ml-pred-mchn
 ```
 
 ##### Running the Notebooks
@@ -57,7 +57,7 @@ $ conda activate ml-pred-fail
 With the environment activated, launch Jupyter to run the notebooks:
 
 ```bash
-(ml-pred-fail) $ jupyter notebook
+(ml-pred-mchn) $ jupyter notebook
 ```
 
 This will start Jupyter. Open and execute the project notebooks to explore the code. When Jupyter is launched from the root of the project directory, it automatically configures the path to include the `src/` and `data/` directories, enabling straightforward imports within the notebooks.
