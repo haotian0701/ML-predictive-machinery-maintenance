@@ -4,6 +4,13 @@ This project utilizes and contrasts several machine learning techniques — incl
 
 To ensure the effectiveness of the models, this project addresses various challenges such as computational limitations, feature engineering, and potential overfitting. A structured train-validate-test framework is employed, focusing on metrics such as AUROC, accuracy, precision, and recall, _with some models achieving validation and test AUROC figures exceeding 0.999._ Through these efforts, the project demonstrates how advanced predictive techniques can minimize downtime, ensure operational safety, and extend the lifespan of industrial machinery.
 
+The notebooks in this repository are organized as follows:
+
+1. **`notebooks/data_exploration/`**: Contains notebooks for initial data visualization and exploration to understand the data's structure, distributions, etc.
+2. **`notebooks/preprocess_data/`**: Includes notebooks that handle data cleaning, transformation, and preparation tasks to convert raw data into a format suitable for analysis.
+3. **`notebooks/create_features_targets/`**: Notebooks in this directory focus on engineering the features (e.g., summarizing a 24-hour window to later make a prediction for) and preparing target variables (e.g., predicting future failure 24-hours into the future) based on different forecasting windows.
+4. **`notebooks/run_experiments/`**: This directory houses notebooks that run various machine learning experiments, comparing model performances and documenting results.
+
 To get started with running the code yourself, please see the [Usage section](#usage) below.
 
 ## Data and Preprocessing
