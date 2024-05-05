@@ -28,6 +28,8 @@ To ensure thorough evaluation and prevent overfitting, the dataset was partition
 
 The evaluation of the models yielded varied results. Logistic regression, a linear model, showed suprisingly respectable AUROC performance but struggled with precision-recall, indicating its limitations in addressing the nuanced complexities of the dataset. Meanwhile, the MLP unexpectedly outperformed both the RNN and LSTM in across many metrics, serving as a reminder of both the difficulties of sequence processing and that more complex models are not always better. Finally, the standout performer was the GRU model, which achieved nearly perfect AUROC scores in both validation and test phases.
 
+For all results information, please see the notebook files in `notebooks/run_experiments/`.
+
 ## Discussion
 
 Logistic regression was quite effective despite its simplicity, suggesting that many relationships between features and targets may exhibit linear characteristics in this case. The RNN and LSTM models, specifically designed to handle sequences, did not perform as expected, likely suffering from vanishing or exploding gradients (exacerbated by the length of input sequences, 24 hours). The MLP's strong performance indicates that less complex models can be highly effective with thorough feature engineering and appropriate hyperparameter tuning. The GRU's superior results reinforce the importance of choosing the right model architecture that aligns with the specific dynamics of the dataset.
