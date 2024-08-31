@@ -45,7 +45,21 @@ This project ultimately demonstrates that machine learning can significantly enh
 
 ## Model Performance Snapshots
 
-...
+Validation and test confusion matrices for the GRU model predicting machine failure **6 hours** in advance at a True Positive Rate (TPR) of 0.8:
+
+<img
+  src="images/GRU_6hPred_ValTest_TPR0.8.png"
+  alt="GRU 6h Prediction Confusion Matrices (AUROC>0.999)"
+  width="550"
+/>
+
+Validation and test confusion matrices for the GRU model predicting machine failure **24 hours** in advance at a True Positive Rate (TPR) of 0.8:
+
+<img
+  src="images/GRU_24hPred_ValTest_TPR0.8.png"
+  alt="GRU 24h Prediction Confusion Matrices (AUROC>0.999)"
+  width="550"
+/>
 
 ## Usage
 
